@@ -3,79 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestionale 730 Sospesi - Cloud Sync</title>
+    <title>Gestionale 730 - Ricadute 2026</title>
     <style>
         :root {
             --primary: #2c3e50; --accent: #3498db; --success: #27ae60;
             --bg: #f4f7f6; --text: #333;
         }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
-        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
         
-        header { border-bottom: 3px solid var(--accent); margin-bottom: 25px; padding-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-        h1 { margin: 0; font-size: 1.6rem; color: var(--primary); }
+        header { border-bottom: 3px solid var(--accent); margin-bottom: 20px; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        h1 { margin: 0; font-size: 1.5rem; color: var(--primary); }
 
-        /* Form Professionale */
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #e0e0e0; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #ddd; }
         .group { display: flex; flex-direction: column; }
-        label { font-size: 0.85rem; font-weight: bold; margin-bottom: 5px; color: #555; }
-        input, select, textarea { padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; }
+        label { font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; color: #666; }
+        input, select { padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
         
-        .btn-submit { grid-column: 1 / -1; background: var(--success); color: white; border: none; padding: 12px; font-weight: bold; cursor: pointer; border-radius: 5px; transition: 0.3s; margin-top: 10px; }
-        .btn-submit:hover { background: #219150; transform: translateY(-1px); }
-        .btn-submit:disabled { background: #bdc3c7; cursor: not-allowed; }
+        .btn-submit { grid-column: 1 / -1; background: var(--success); color: white; border: none; padding: 12px; font-weight: bold; cursor: pointer; border-radius: 5px; transition: 0.3s; }
+        .btn-submit:hover { background: #219150; }
+        .btn-submit:disabled { background: #ccc; }
 
-        /* Tabella */
-        .table-area { margin-top: 30px; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th { background: var(--primary); color: white; padding: 12px; text-align: left; font-size: 0.9rem; }
-        td { padding: 12px; border-bottom: 1px solid #eee; font-size: 0.95rem; }
-        tr:nth-child(even) { background-color: #fcfcfc; }
-        tr:hover { background-color: #f1f7ff; }
-
-        /* Badge e Status */
-        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
-        .badge-singolo { background: #e3f2fd; color: #1976d2; }
-        .badge-congiunto { background: #e8f5e9; color: #2e7d32; }
-        .sync-indicator { font-size: 0.8rem; color: #7f8c8d; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background: var(--primary); color: white; padding: 12px; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
         
-        #loader { display: none; text-align: center; margin: 10px 0; font-weight: bold; color: var(--accent); }
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; }
+        .badge-singolo { background: #d1ecf1; color: #0c5460; }
+        .badge-congiunto { background: #d4edda; color: #155724; }
+        
+        .status { font-size: 0.8rem; color: #888; }
+        #loader { display: none; text-align: center; padding: 10px; font-weight: bold; color: var(--accent); }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>Gestione Sospesi 730</h1>
-        <div id="syncStatus" class="sync-indicator">In attesa...</div>
+        <h1>730 Sospesi - Ricadute 2026</h1>
+        <div id="syncStatus" class="status">Verifica connessione...</div>
     </header>
 
-    <form id="form730" class="form-grid">
+    <form id="mainForm" class="form-grid">
         <div class="group">
-            <label>Nome e Cognome Cliente</label>
-            <input type="text" id="cliente" required placeholder="Mario Rossi">
+            <label>Cliente</label>
+            <input type="text" id="cliente" required placeholder="Cognome Nome">
         </div>
         <div class="group">
-            <label>Tipo Dichiarazione</label>
+            <label>Tipo</label>
             <select id="tipo">
                 <option value="Singolo">Singolo</option>
                 <option value="Congiunto">Congiunto</option>
             </select>
         </div>
         <div class="group">
-            <label>Nome Operatore</label>
-            <input type="text" id="operatore" required placeholder="Es. Anna">
+            <label>Operatore</label>
+            <input type="text" id="operatore" required placeholder="Tuo Nome">
         </div>
         <div class="group">
-            <label>Motivazione Sospensione</label>
-            <input type="text" id="motivazione" required placeholder="Es. Manca CU">
+            <label>Motivazione</label>
+            <input type="text" id="motivazione" required placeholder="Perché è sospesa?">
         </div>
-        <button type="submit" id="submitBtn" class="btn-submit">Invia al Cloud</button>
+        <button type="submit" id="btnInvia" class="btn-submit">Registra Pratica</button>
     </form>
 
-    <div id="loader">Invio dati in corso al foglio Google...</div>
+    <div id="loader">Invio al database Google in corso...</div>
 
-    <div class="table-area">
+    <div style="overflow-x: auto;">
         <table>
             <thead>
                 <tr>
@@ -86,55 +81,59 @@
                     <th>Operatore</th>
                 </tr>
             </thead>
-            <tbody id="tabellaCorpo">
-                </tbody>
+            <tbody id="tabellaCorpo"></tbody>
         </table>
     </div>
 </div>
 
 <script>
-    // IL TUO URL DI GOOGLE APPS SCRIPT
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzsd-4dNYvb5TETYtm7XUH_PoX2arFeToNIXRXSzQmcc-i-5lvkGAAPpjKYzCbno7lo/exec";
+    // URL AGGIORNATO
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxK497ktBj1C-R0vdVulUlWDsNsBNQthCiIIEpnWZ1JpaCA8UeBAoiNZ8-StXw4FnpS/exec";
 
-    const form = document.getElementById('form730');
-    const loader = document.getElementById('loader');
-    const syncStatus = document.getElementById('syncStatus');
-    const submitBtn = document.getElementById('submitBtn');
-
-    // Funzione per caricare i dati dal foglio
     async function caricaDati() {
-        syncStatus.innerText = "Sincronizzazione in corso...";
+        const status = document.getElementById('syncStatus');
+        status.innerText = "Sincronizzazione...";
         try {
-            const response = await fetch(SCRIPT_URL);
-            const dati = await response.json();
+            const r = await fetch(SCRIPT_URL);
+            const dati = await r.json();
             const corpo = document.getElementById('tabellaCorpo');
             corpo.innerHTML = '';
-            
-            // Mostriamo gli ultimi inseriti per primi
+
+            if (dati.length === 0) {
+                status.innerText = "Database vuoto";
+                return;
+            }
+
             dati.reverse().forEach(p => {
-                const dataObj = new Date(p.data);
-                const dataFmt = isNaN(dataObj) ? p.data : dataObj.toLocaleDateString('it-IT');
-                const badgeClass = p.tipo === 'Singolo' ? 'badge-singolo' : 'badge-congiunto';
-                
+                // Gestione flessibile nomi colonne (maiusecole/minuscole)
+                const d = p.data || p.Data || "";
+                const c = p.cliente || p.Cliente || "";
+                const t = p.tipo || p.Tipo || "Singolo";
+                const m = p.motivazione || p.Motivazione || "";
+                const o = p.operatore || p.Operatore || "";
+
+                const bClass = t.toString().toLowerCase() === 'singolo' ? 'badge-singolo' : 'badge-congiunto';
+                const dataFmt = d ? new Date(d).toLocaleDateString('it-IT') : "-";
+
                 corpo.innerHTML += `
                     <tr>
                         <td>${dataFmt}</td>
-                        <td><strong>${p.cliente}</strong></td>
-                        <td><span class="badge ${badgeClass}">${p.tipo}</span></td>
-                        <td>${p.motivazione}</td>
-                        <td>${p.operatore}</td>
+                        <td><strong>${c}</strong></td>
+                        <td><span class="badge ${bClass}">${t}</span></td>
+                        <td>${m}</td>
+                        <td>${o}</td>
                     </tr>`;
             });
-            syncStatus.innerText = "Dati aggiornati: " + new Date().toLocaleTimeString();
+            status.innerText = "Sincronizzato alle " + new Date().toLocaleTimeString();
         } catch (e) {
-            syncStatus.innerText = "Errore di connessione";
-            console.error(e);
+            status.innerText = "Errore di connessione al Foglio Google";
         }
     }
 
-    // Funzione per inviare i dati
-    form.onsubmit = async (e) => {
+    document.getElementById('mainForm').onsubmit = async (e) => {
         e.preventDefault();
+        const btn = document.getElementById('btnInvia');
+        const load = document.getElementById('loader');
         
         const payload = {
             cliente: document.getElementById('cliente').value,
@@ -143,30 +142,26 @@
             motivazione: document.getElementById('motivazione').value
         };
 
-        loader.style.display = "block";
-        submitBtn.disabled = true;
+        btn.disabled = true;
+        load.style.display = "block";
 
         try {
-            // Invio dati (mode no-cors per Google Apps Script)
             await fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
-                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(payload)
             });
-
-            form.reset();
-            // Aspettiamo un attimo che Google elabori prima di ricaricare
+            
+            document.getElementById('mainForm').reset();
             setTimeout(() => {
-                loader.style.display = "none";
-                submitBtn.disabled = false;
+                load.style.display = "none";
+                btn.disabled = false;
                 caricaDati();
             }, 1500);
-
-        } catch (e) {
-            alert("Errore durante l'invio");
-            loader.style.display = "none";
-            submitBtn.disabled = false;
+        } catch (err) {
+            alert("Errore nell'invio");
+            btn.disabled = false;
+            load.style.display = "none";
         }
     };
 
